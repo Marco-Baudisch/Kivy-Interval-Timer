@@ -1,0 +1,308 @@
+MDScreenManager:
+    StartScreen:
+        name: 'menu'
+    TrainingScreen:
+        name: 'training'
+
+
+<StartScreen>:
+    md_bg_color: self.theme_cls.backgroundColor
+    MDBoxLayout:
+        orientation: 'vertical'
+        spacing: "4dp"
+
+        MDTopAppBar:
+            type: "small"
+            md_bg_color: self.theme_cls.primaryColor
+
+            MDTopAppBarTitle:
+                text: "Setup your workout"
+
+
+        MDFloatLayout:
+            #Settings
+            MDBoxLayout:
+                orientation: "vertical"
+                pos_hint: {"center_x": .5, "center_y": .5}
+
+
+                #Spacer
+                Widget:
+                    size_hint_y: None
+                    height: "25dp"
+
+
+                #Setting: Number of repetitions
+                MDBoxLayout:
+                    orientation: "vertical"
+                    pos_hint: {"center_x": .5, "center_y": .6}
+
+
+                    MDLabel:
+                        text: "Number of repetitions:"
+                        halign: "center"
+
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+
+
+                        MDButton:
+                            on_release:
+                                root.number_of_repetitions_minus()
+
+                            MDButtonText:
+                                text: "-"
+
+
+                        MDLabel:
+                            text: str(app.repetitions)
+                            halign: "center"
+
+
+                        MDButton:
+                            on_release:
+                                root.number_of_repetitions_plus()
+
+                            MDButtonText:
+                                text: "+"
+
+
+                #Setting: Duration of repetitions
+                MDBoxLayout:
+                    orientation: "vertical"
+                    pos_hint: {"center_x": .5, "center_y": .6}
+
+
+                    MDLabel:
+                        text: "Duration of repetitions:"
+                        halign: "center"
+
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+
+
+                        MDButton:
+                            on_release:
+                                root.duration_of_repetitions_minus()
+
+                            MDButtonText:
+                                text: "-"
+
+
+                        MDLabel:
+                            text: str(app.duration) + "s"
+                            halign: "center"
+
+
+                        MDButton:
+                            on_release:
+                                root.duration_of_repetitions_plus()
+
+                            MDButtonText:
+                                text: "+"
+
+
+                #Setting: Rest interval
+                MDBoxLayout:
+                    orientation: "vertical"
+                    pos_hint: {"center_x": .5, "center_y": .6}
+
+
+                    MDLabel:
+                        text: "Rest interval:"
+                        halign: "center"
+
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+
+
+                        MDButton:
+                            on_release:
+                                root.rest_interval_minus()
+
+                            MDButtonText:
+                                text: "-"
+
+
+                        MDLabel:
+                            text: str(app.rest) + "s"
+                            halign: "center"
+
+
+                        MDButton:
+                            on_release:
+                                root.rest_interval_plus()
+
+                            MDButtonText:
+                                text: "+"
+
+
+                #Spacer
+                Widget:
+                    size_hint_y: None
+                    height: "350dp"
+
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                spacing: "5dp"
+
+
+                #Start-Timer
+                MDButton:
+                    style: "filled"
+                    theme_width: "Custom"
+                    pos_hint: {"center_x": .5, "center_y": .3}
+                    width: root.width * 0.8
+                    height: "80dp"
+                    role: "large"
+                    radius: [dp(40), ]
+                    on_release:
+                        root.manager.current = 'training'
+                        root.manager.transition.direction = 'left'
+                        app.connect_start_timer()
+
+                    MDButtonText:
+                        text: "START"
+                        font_style: "Title"
+                        pos_hint: {"center_x": .5,  "center_y": .5}
+
+
+                #Clear-Taste
+                MDButton:
+                    theme_bg_color: "Custom"
+                    md_bg_color: 0.2, 0.2, 0.2, 1
+                    pos_hint: {"center_x": .5, }
+                    theme_width: "Custom"
+                    width: root.width * 0.8
+                    height: "50dp"
+                    role: "large"
+                    radius: [dp(25), ]
+                    pos_hint: {"center_x": .5, "center_y": .2}
+                    on_release: app.clear()
+
+                    MDButtonText:
+                        text: "RESET"
+                        font_style: "Title"
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                        theme_text_color: "Custom"
+                        text_color: 1, 1, 1, 1
+
+
+                #Spacer
+                Widget:
+                    size_hint_y: None
+                    height: "100dp"
+
+
+            #DeBug-Button
+            MDButton:
+                on_release: app.debug()
+
+                MDButtonText:
+                    text: 'Debug'
+
+
+<TrainingScreen>:
+    md_bg_color: self.theme_cls.backgroundColor
+    MDBoxLayout:
+        orientation: 'vertical'
+
+
+        MDTopAppBar:
+            type: "small"
+            md_bg_color: self.theme_cls.primaryColor
+
+            MDTopAppBarTitle:
+                text: "Training"
+
+
+        MDBoxLayout:
+            orientation: "vertical"
+
+
+            MDFloatLayout:
+                orientation: 'vertical'
+
+
+                #Timertext
+                MDLabel:
+                    role: "large"
+                    pos_hint: {"center_x": .5, "center_y": .75}
+                    font_style: "Display"
+                    halign: "center"
+                    text: app.timer_text
+
+
+                #Statustext
+                MDLabel:
+                    pos_hint: {"center_x": .5, "center_y": .35}
+                    font_style: "Display"
+                    role: "small"
+                    halign: "center"
+                    text: app.status_text
+
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                spacing: "5dp"
+
+
+                #Pause
+                MDButton:
+                    pos_hint: {"center_x": .5, }
+                    style: "filled"
+                    theme_width: "Custom"
+                    size_hint: None, None
+                    width: root.width * 0.8
+                    height: "80dp"
+                    role: "large"
+                    radius: [dp(40), ]
+                    on_release:
+                        root.pause()
+
+                    MDButtonText:
+
+                        text: root.pause_button
+                        font_style: "Title"
+                        pos_hint: {"center_x": .5,  "center_y": .5}
+
+
+                #Clear-Taste
+                MDButton:
+                    theme_bg_color: "Custom"
+                    md_bg_color: 0.2, 0.2, 0.2, 1
+                    pos_hint: {"center_x": .5, }
+                    size_hint: None, None
+                    width: root.width * 0.8
+                    height: "50dp"
+                    role: "large"
+                    radius: [dp(25), ]
+                    on_release:
+                        app.clear()
+                        root.manager.current = 'menu'
+                        root.manager.transition.direction = 'right'
+
+                    MDButtonText:
+                        text: "RESET"
+                        font_style: "Title"
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                        theme_text_color: "Custom"
+                        text_color: 1, 1, 1, 1
+
+
+                #Spacer
+                Widget:
+                    size_hint_y: None
+                    height: "55dp"
+
+
+                #DeBug-Button
+                MDButton:
+                    on_release: app.debug()
+
+                    MDButtonText:
+                        text: 'Debug'
