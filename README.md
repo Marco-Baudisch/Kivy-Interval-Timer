@@ -19,5 +19,6 @@ A practical interval training application developed with **Python** and **KivyMD
 
 ### Planned Enhancements:
 - **Audio Integration:** Implementing sound for interval transitions.
-- **UI/UX Polishing:** Refining the visual interface for a more intuitive user experience.
+- **UI Polishing:** Refining the visual interface for a more intuitive user experience.
+- **Debug button:** Remove debug button in final app
 - **Android Port:** Finalizing the build process for Android devices.
