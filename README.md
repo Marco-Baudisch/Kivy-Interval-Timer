@@ -1,5 +1,10 @@
 # Kivy Interval Timer
 
+<p align="center">
+  <img src="screenshots/startscreen.PNG" width="250" alt="Start Screen">
+  <img src="screenshots/trainingscreen.PNG" width="250" alt="Training Screen">
+</p>
+
 A practical interval training application developed with **Python** and **KivyMD**. This project was created to solve a personal need for a customizable workout timer while practicing mobile-oriented UI logic.
 
 ## Key Features
