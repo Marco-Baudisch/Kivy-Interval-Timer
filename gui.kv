@@ -9,7 +9,6 @@ MDScreenManager:
     md_bg_color: self.theme_cls.backgroundColor
     MDBoxLayout:
         orientation: 'vertical'
-        spacing: "4dp"
 
         MDTopAppBar:
             type: "small"
@@ -24,6 +23,7 @@ MDScreenManager:
             MDBoxLayout:
                 orientation: "vertical"
                 pos_hint: {"center_x": .5, "center_y": .5}
+                padding: "35dp"
 
 
                 #Spacer
@@ -49,7 +49,7 @@ MDScreenManager:
 
                         MDButton:
                             on_release:
-                                root.number_of_repetitions_minus()
+                                root.minus("repetitions")
 
                             MDButtonText:
                                 text: "-"
@@ -62,7 +62,7 @@ MDScreenManager:
 
                         MDButton:
                             on_release:
-                                root.number_of_repetitions_plus()
+                                root.plus("repetitions")
 
                             MDButtonText:
                                 text: "+"
@@ -85,7 +85,7 @@ MDScreenManager:
 
                         MDButton:
                             on_release:
-                                root.duration_of_repetitions_minus()
+                                root.minus("dur_repetitions")
 
                             MDButtonText:
                                 text: "-"
@@ -98,7 +98,7 @@ MDScreenManager:
 
                         MDButton:
                             on_release:
-                                root.duration_of_repetitions_plus()
+                                root.plus("dur_repetitions")
 
                             MDButtonText:
                                 text: "+"
@@ -121,7 +121,7 @@ MDScreenManager:
 
                         MDButton:
                             on_release:
-                                root.rest_interval_minus()
+                                root.minus("rest")
 
                             MDButtonText:
                                 text: "-"
@@ -134,7 +134,7 @@ MDScreenManager:
 
                         MDButton:
                             on_release:
-                                root.rest_interval_plus()
+                                root.plus("rest")
 
                             MDButtonText:
                                 text: "+"

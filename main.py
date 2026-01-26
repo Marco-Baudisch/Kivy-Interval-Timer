@@ -24,57 +24,61 @@ class WindowManager(ScreenManager):
     pass
 
 class StartScreen(MDScreen):
-    # Setting: Number of repetitions
-    number_of_repetitions_max = 15
-    number_of_repetitions_min = 1
-
-    def number_of_repetitions_plus(self):
+    #Settings
+    def minus(self, button_type):
         app = MDApp.get_running_app()
 
-        if app.repetitions < self.number_of_repetitions_max:
-            app.repetitions += 1
+        if button_type == "repetitions":
+             min_val = app.repetition_properties[1]
+             steps = app.repetition_properties[2]
+             current = app.repetition_properties[3]
+        elif button_type == "dur_repetitions":
+            min_val = app.duration_properties[1]
+            steps = app.duration_properties[2]
+            current = app.duration_properties[3]
+        elif button_type == "rest":
+            min_val = app.rest_properties[1]
+            steps = app.rest_properties[2]
+            current = app.rest_properties[3]
 
 
-    def number_of_repetitions_minus(self):
+        if current > min_val:
+            current -= steps
+
+            if button_type == "repetitions":
+                app.repetitions = current
+            elif button_type == "dur_repetitions":
+                app.duration = current
+            elif button_type == "rest":
+                app.rest = current
+
+
+    def plus(self, button_type):
         app = MDApp.get_running_app()
 
-        if app.repetitions > self.number_of_repetitions_min:
-            app.repetitions -= 1
+        if button_type == "repetitions":
+             max_val = app.repetition_properties[0]
+             steps = app.repetition_properties[2]
+             current = app.repetition_properties[3]
+        elif button_type == "dur_repetitions":
+            max_val = app.duration_properties[0]
+            steps = app.duration_properties[2]
+            current = app.duration_properties[3]
+        elif button_type == "rest":
+            max_val = app.rest_properties[0]
+            steps = app.rest_properties[2]
+            current = app.rest_properties[3]
 
 
-    #Setting: Duration of repetitions
-    duration_of_repetitions_min = 25
-    duration_of_repetitions_max = 60
+        if current < max_val:
+            current += steps
 
-    def duration_of_repetitions_plus(self):
-        app = MDApp.get_running_app()
-
-        if app.duration < self.duration_of_repetitions_max:
-            app.duration += 5
-
-
-    def duration_of_repetitions_minus(self):
-        app = MDApp.get_running_app()
-
-        if app.duration > self.duration_of_repetitions_min:
-            app.duration -= 5
-
-    #Setting: Rest interval
-    rest_interval_max = 30
-    rest_interval_min = 0
-
-    def rest_interval_plus(self):
-        app = MDApp.get_running_app()
-
-        if app.rest < self.rest_interval_max:
-            app.rest += 5
-
-
-    def rest_interval_minus(self):
-        app = MDApp.get_running_app()
-
-        if app.rest > self.rest_interval_min:
-            app.rest -= 5
+            if button_type == "repetitions":
+                app.repetitions = current
+            elif button_type == "dur_repetitions":
+                app.duration = current
+            elif button_type == "rest":
+                app.rest = current
 
 
 class TrainingScreen(MDScreen):
@@ -182,6 +186,19 @@ class GuiApp(MDApp):
     total_seconds = NumericProperty(0)
     timer_text = StringProperty("00 : 05")
     status_text = StringProperty("Go!!!")
+
+    #Settings properties: max, min, steps, start
+    @property
+    def repetition_properties(self):
+        return [15, 1, 1, int(self.repetitions)]
+
+    @property
+    def duration_properties(self):
+        return [60, 25, 5, int(self.duration)]
+
+    @property
+    def rest_properties(self):
+        return [30, 0, 5, int(self.rest)]
 
 
     def connect_start_timer(self):
