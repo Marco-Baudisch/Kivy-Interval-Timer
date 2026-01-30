@@ -253,6 +253,7 @@ MDScreenManager:
 
                 #Pause
                 MDButton:
+                    id: pause_button
                     pos_hint: {"center_x": .5, }
                     style: "filled"
                     theme_width: "Custom"
@@ -261,6 +262,8 @@ MDScreenManager:
                     height: "80dp"
                     role: "large"
                     radius: [dp(40), ]
+                    theme_bg_color: "Custom"
+                    md_bg_color: app.theme_cls.primaryColor
                     on_release:
                         root.pause()
 
@@ -283,8 +286,8 @@ MDScreenManager:
                     radius: [dp(25), ]
                     on_release:
                         app.clear()
-                        root.manager.current = 'menu'
                         root.manager.transition.direction = 'right'
+                        root.manager.current = 'menu'
 
                     MDButtonText:
                         text: "RESET"

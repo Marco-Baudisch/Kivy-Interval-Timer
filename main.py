@@ -23,6 +23,7 @@ Window.size = (360, 640)
 class WindowManager(ScreenManager):
     pass
 
+
 class StartScreen(MDScreen):
     #Settings
     def minus(self, button_type):
@@ -85,12 +86,13 @@ class TrainingScreen(MDScreen):
     app = MDApp.get_running_app()
 
     pause_button = StringProperty("PAUSE")
-    status = 1
+    status = 2
     five_seconds = 5
 
 
     def before_start(self):
         app = MDApp.get_running_app()
+        self.status = 2
 
         Clock.schedule_interval(self.update_5_sek, 1)
         app.status_text = "Starting ..."
@@ -109,14 +111,19 @@ class TrainingScreen(MDScreen):
             app.timer_text = "{:02d} : {:02d}".format(int(minutes_f), int(seconds_f))
         else:
             self.timer_text = "00 : 00"
+            self.status = 1
             self.start_timer()
             return False
 
 
     def update_timer(self, dt):
         MDapp = MDApp.get_running_app()
+
         if self.current_time > 0:
             self.current_time -= 1
+
+            if self.current_time < 0:
+                self.current_time = 0
 
             minutes = self.current_time // 60
 
@@ -130,6 +137,7 @@ class TrainingScreen(MDScreen):
 
     def start_timer(self):
         app = MDApp.get_running_app()
+        self.stop_timer()
 
         if app.total_seconds > 0:
             if self.status == 1:
@@ -159,24 +167,38 @@ class TrainingScreen(MDScreen):
 
 
     def pause(self):
-        if self.pause_button == "PAUSE":
-            self.pause_button = "RESUME"
+        app = MDApp.get_running_app()
+
+        if self.status == 2:
             self.stop_timer()
+            app.clear()
+            self.manager.transition.direction = 'right'
+            self.manager.current = 'menu'
+        else:
+            if self.pause_button == "PAUSE":
+                self.pause_button = "RESUME"
+                self.ids.pause_button.md_bg_color = [0.9, 0.3, 0.3, 1]
+                self.stop_timer()
 
-        elif self.pause_button == "RESUME":
-            self.pause_button = "PAUSE"
-            self.update_timer(0)
-            Clock.schedule_interval(self.update_timer, 1)
-
+            elif self.pause_button == "RESUME":
+                self.pause_button = "PAUSE"
+                self.ids.pause_button.md_bg_color = app.theme_cls.primaryColor
+                self.stop_timer()
+                self.update_timer(0)
+                Clock.schedule_interval(self.update_timer, 1)
 
     def stop_timer(self):
         Clock.unschedule(self.update_timer)
+        Clock.unschedule(self.update_5_sek)
 
 
     def intern_clear(self):
-        self.pause_button = "Pause"
+        app = MDApp.get_running_app()
+
+        self.pause_button = "PAUSE"
         self.status = 1
         self.five_seconds = 5
+        self.ids.pause_button.md_bg_color = app.theme_cls.primaryColor
 
 
 class GuiApp(MDApp):
