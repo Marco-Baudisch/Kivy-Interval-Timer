@@ -18,12 +18,11 @@ A practical interval training application developed with **Python** and **KivyMD
 - **IDE:** PyCharm
 
 ### Known Technical Issues:
-- **Button Logic:** Multiple rapid clicks on the start button can cause conflicts with the pause functionality.
 - **Timer Precision:** Frequent toggling of the pause button can lead to slight speed-up of the countdown.
-- **State Management:** The timer is currently non-pausable during the initial 5-second countdown.
 
 ### Planned Enhancements:
 - **Audio Integration:** Implementing sound for interval transitions.
 - **UI Polishing:** Refining the visual interface for a more intuitive user experience.
-- **Debug button:** Remove debug button in final app
+- **Settings Page:** - Add a toggle to enable/disable the **Debug Mode**. Implement an "Advanced User" mode to bypass min/max constraints for full customization.
+- **Data Persistence:** Implement local storage to remember user settings and training configurations for future sessions.
 - **Android Port:** Finalizing the build process for Android devices.
