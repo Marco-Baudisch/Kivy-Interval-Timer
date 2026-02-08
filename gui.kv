@@ -198,12 +198,12 @@ MDScreenManager:
                     height: "100dp"
 
 
-            #DeBug-Button
-            MDButton:
-                on_release: app.debug()
+                #Debug-Button
+                #MDButton:
+                    #on_release: app.debug()
 
-                MDButtonText:
-                    text: 'Debug'
+                    #MDButtonText:
+                        #text: 'Debug'
 
 
 <TrainingScreen>:
@@ -303,9 +303,15 @@ MDScreenManager:
                     height: "55dp"
 
 
-                #DeBug-Button
-                MDButton:
-                    on_release: app.debug()
+                #Debug replacement
+                Widget:
+                    size_hint_y: None
+                    height: "40dp"
 
-                    MDButtonText:
-                        text: 'Debug'
+
+                #Debug-Button
+                #MDButton:
+                    #on_release: app.debug()
+
+                    #MDButtonText:
+                        #text: 'Debug'

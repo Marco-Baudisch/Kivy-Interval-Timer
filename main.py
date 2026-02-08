@@ -13,9 +13,10 @@ from kivy.properties import NumericProperty, StringProperty
 from kivy.clock import Clock
 from kivy.config import Config
 from kivy.core.window import Window
+from math import ceil
 
 
-#Window size
+#Window size for desktop testing only
 Config.set('graphics', 'resizable', False)
 Window.size = (360, 640)
 
@@ -94,18 +95,16 @@ class TrainingScreen(MDScreen):
         app = MDApp.get_running_app()
         self.status = 2
 
-        Clock.schedule_interval(self.update_5_sek, 1)
+        Clock.schedule_interval(self.update_5_seconds, 1)
         app.status_text = "Starting ..."
 
 
-    def update_5_sek(self, dt):
+    def update_5_seconds(self, dt):
         app = MDApp.get_running_app()
 
         if self.five_seconds > 0:
             self.five_seconds -= 1
-
             minutes_f = self.five_seconds // 60
-
             seconds_f = self.five_seconds % 60
 
             app.timer_text = "{:02d} : {:02d}".format(int(minutes_f), int(seconds_f))
@@ -117,19 +116,18 @@ class TrainingScreen(MDScreen):
 
 
     def update_timer(self, dt):
-        MDapp = MDApp.get_running_app()
+        app = MDApp.get_running_app()
 
         if self.current_time > 0:
-            self.current_time -= 1
+            self.current_time -= dt
 
             if self.current_time < 0:
                 self.current_time = 0
+            current_time_display = ceil(self.current_time)
+            minutes = current_time_display // 60
+            seconds = current_time_display % 60
 
-            minutes = self.current_time // 60
-
-            seconds = self.current_time % 60
-
-            MDapp.timer_text = "{:02d} : {:02d}".format(int(minutes), int(seconds))
+            app.timer_text = "{:02d} : {:02d}".format(int(minutes), int(seconds))
         else:
             self.start_timer()
             return False
@@ -146,9 +144,9 @@ class TrainingScreen(MDScreen):
                 app.timer_text = f"00 : {app.duration}"
                 left = app.repetitions - 1
                 if left > 0:
-                    app.status_text = f"Go!!! Only {left} repetitions left"
+                    app.status_text = f"{left} repetitions left"
                 else:
-                    app.status_text = "Last one, let’s go"
+                    app.status_text = "Last repetition!"
                 app.total_seconds = app.total_seconds - app.duration
 
             elif self.status == 0:
@@ -157,9 +155,9 @@ class TrainingScreen(MDScreen):
                 app.timer_text = f"00 : {app.rest}"
                 app.total_seconds = app.total_seconds - app.rest
                 app.repetitions = app.repetitions - 1
-                app.status_text = f"Rest, only {app.repetitions} repetitions left"
+                app.status_text = f"Rest! {app.repetitions} repetitions left"
 
-            Clock.schedule_interval(self.update_timer, 1)
+            Clock.schedule_interval(self.update_timer, 1/10)
 
         else:
             app.timer_text = "You made it!"
@@ -185,11 +183,11 @@ class TrainingScreen(MDScreen):
                 self.ids.pause_button.md_bg_color = app.theme_cls.primaryColor
                 self.stop_timer()
                 self.update_timer(0)
-                Clock.schedule_interval(self.update_timer, 1)
+                Clock.schedule_interval(self.update_timer, 1/10)
 
     def stop_timer(self):
         Clock.unschedule(self.update_timer)
-        Clock.unschedule(self.update_5_sek)
+        Clock.unschedule(self.update_5_seconds)
 
 
     def intern_clear(self):
@@ -226,8 +224,8 @@ class GuiApp(MDApp):
     def connect_start_timer(self):
         self.total_seconds = self.duration * self.repetitions + self.rest * (self.repetitions - 1)
 
-        training_seite = self.root.get_screen('training')
-        training_seite.before_start()
+        training_site = self.root.get_screen('training')
+        training_site.before_start()
 
 
     def clear(self):
@@ -237,9 +235,9 @@ class GuiApp(MDApp):
         self.rest = 15
         self.total_seconds = 0
         self.timer_text = "00 : 05"
-        training_seite = self.root.get_screen('training')
-        training_seite.stop_timer()
-        training_seite.intern_clear()
+        training_site = self.root.get_screen('training')
+        training_site.stop_timer()
+        training_site.intern_clear()
 
 
     def debug(self):
