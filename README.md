@@ -17,8 +17,9 @@ A practical interval training application developed with **Python** and **KivyMD
 - **Frameworks:** Kivy & KivyMD
 - **IDE:** PyCharm
 
-### Known Technical Issues:
-- **Timer Precision:** Frequent toggling of the pause button can lead to slight speed-up of the countdown.
+### Last changes:
+- **Fixed:** Resolved timer precision issue where rapid toggling of the pause button caused countdown acceleration.
+- **UI:** Cleaned up interface by removing the debug button from the UI.
 
 ### Planned Enhancements:
 - **Audio Integration:** Implementing sound for interval transitions.
