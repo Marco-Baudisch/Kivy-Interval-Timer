@@ -22,6 +22,10 @@ A practical interval training application developed with **Python** and **KivyMD
 - **UI:** Cleaned up interface by removing the debug button from the UI.
 
 ### Planned Enhancements:
+- **Total Duration Display:** Show the calculated total workout time (training + rest) on the setup screen.
+- **Dynamic Training Labels:** - Allow users to name individual intervals (e.g., "Pushups", "Plank").
+    - Use the status text to announce the "Next Up" exercise.
+    - Toggleable via settings for a cleaner interface.
 - **Audio Integration:** Implementing sound for interval transitions.
 - **UI Polishing:** Refining the visual interface for a more intuitive user experience.
 - **Settings Page:** - Add a toggle to enable/disable the **Debug Mode**. Implement an "Advanced User" mode to bypass min/max constraints for full customization.
