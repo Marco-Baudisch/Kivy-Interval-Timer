@@ -18,11 +18,9 @@ A practical interval training application developed with **Python** and **KivyMD
 - **IDE:** PyCharm
 
 ### Last changes:
-- **Fixed:** Resolved timer precision issue where rapid toggling of the pause button caused countdown acceleration.
-- **UI:** Cleaned up interface by removing the debug button from the UI.
+- **UI:** Added Session-Wide Timer
 
 ### Planned Enhancements:
-- **Total Duration Display:** Show the calculated total workout time (training + rest) on the setup screen.
 - **Dynamic Training Labels:** - Allow users to name individual intervals (e.g., "Pushups", "Plank").
     - Use the status text to announce the "Next Up" exercise.
     - Toggleable via settings for a cleaner interface.
