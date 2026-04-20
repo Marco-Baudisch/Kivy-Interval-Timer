@@ -18,7 +18,7 @@ from math import ceil
 
 #Window size for desktop testing only
 Config.set('graphics', 'resizable', False)
-Window.size = (360, 640)
+Window.size = (450, 832)
 
 
 class WindowManager(ScreenManager):
@@ -108,6 +108,7 @@ class TrainingScreen(MDScreen):
             seconds_f = self.five_seconds % 60
 
             app.timer_text = "{:02d} : {:02d}".format(int(minutes_f), int(seconds_f))
+            app.remaining_time = "{:02d} : {:02d}".format(int(minutes_f), int(seconds_f))
         else:
             self.timer_text = "00 : 00"
             self.status = 1
@@ -120,14 +121,25 @@ class TrainingScreen(MDScreen):
 
         if self.current_time > 0:
             self.current_time -= dt
+            self.remaining_total_seconds -= dt
 
             if self.current_time < 0:
                 self.current_time = 0
-            current_time_display = ceil(self.current_time)
-            minutes = current_time_display // 60
-            seconds = current_time_display % 60
 
-            app.timer_text = "{:02d} : {:02d}".format(int(minutes), int(seconds))
+            #Calculation current timer
+            current_time_display = ceil(self.current_time)
+            current_minutes = current_time_display // 60
+            current_seconds = current_time_display % 60
+
+            app.timer_text = "{:02d} : {:02d}".format(int(current_minutes), int(current_seconds))
+
+            #Calculation remaining timer
+            remaining_time_display = ceil(self.remaining_total_seconds)
+            remaining_minutes = remaining_time_display // 60
+            remaining_seconds = remaining_time_display % 60
+
+            app.remaining_time = "{:02d} : {:02d}".format(int(remaining_minutes), int(remaining_seconds))
+
         else:
             self.start_timer()
             return False
@@ -141,6 +153,7 @@ class TrainingScreen(MDScreen):
             if self.status == 1:
                 self.current_time = app.duration
                 self.status = 0
+                self.remaining_total_seconds = app.total_seconds
                 app.timer_text = f"00 : {app.duration}"
                 left = app.repetitions - 1
                 if left > 0:
@@ -205,6 +218,7 @@ class GuiApp(MDApp):
     rest = NumericProperty(15)
     total_seconds = NumericProperty(0)
     timer_text = StringProperty("00 : 05")
+    remaining_time = StringProperty("00 : 05")
     status_text = StringProperty("Go!!!")
 
     #Settings properties: max, min, steps, start
@@ -235,6 +249,7 @@ class GuiApp(MDApp):
         self.rest = 15
         self.total_seconds = 0
         self.timer_text = "00 : 05"
+        self.remaining_time = "00 : 05"
         training_site = self.root.get_screen('training')
         training_site.stop_timer()
         training_site.intern_clear()

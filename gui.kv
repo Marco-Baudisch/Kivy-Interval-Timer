@@ -220,6 +220,18 @@ MDScreenManager:
                 text: "Training"
 
 
+            MDTopAppBarTrailingButtonContainer:
+                padding: ["12dp", 0, "24dp", 0]
+
+                MDLabel:
+                    text: app.remaining_time
+                    font_style: "Body"
+                    role: "small"
+                    theme_text_color: "Secondary"
+                    adaptive_size: True
+                    pos_hint: {"center_y": .5}
+
+
         MDBoxLayout:
             orientation: "vertical"
 
